@@ -6,7 +6,7 @@
      Component Class: handles data binding
      Service: sends the collected data to the Server
 
-!["Angular Forms"](./angular forms.png)
+![ANGULAR Forms](./images/angular-forms.png)
 
 To achieve this Angular provides two approaches:
 
