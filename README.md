@@ -11,16 +11,16 @@
 To achieve this Angular provides two approaches:
 
 1. Template Driven Forms
-   – Heavy on the component template
+   – Heavy on the component template  
    – Easy to use and like Angular JS forms
-   – Two-way data binding with ngModel
-   – Bulky HTML and minimal code
-   – Automatically tracks the form and form elements state validity
-   – Unit testing is a challenge
-   – Readability decreases with complex forms and validations
+   – Two-way data binding with ngModel  
+   – Bulky HTML and minimal code  
+   – Automatically tracks the form and form elements state validity  
+   – Unit testing is a challenge  
+   – Readability decreases with complex forms and validations  
    – Suitable for simple scenarios
 
-2. Reactive Forms
+2) Reactive Forms
    - Heavy on the component class
 
 - Suitable or unit testing
