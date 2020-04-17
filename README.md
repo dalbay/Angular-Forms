@@ -1,12 +1,12 @@
 # Angular-Forms
 
-Angular Forms – Concepts:
+**Angular Forms – Concepts:**
 
- Component Template: contains the HTML to collect the user data
- Component Class: handles data binding
- Service: sends the collected data to the Server
+     Component Template: contains the HTML to collect the user data
+     Component Class: handles data binding
+     Service: sends the collected data to the Server
 
-![Angular Forms](./angular forms.png)
+!["Angular Forms"](./angular forms.png)
 
 To achieve this Angular provides two approaches:
 
