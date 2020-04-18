@@ -177,7 +177,7 @@ Angular automatically mirrors many control properties onto the form control elem
 .ng-pending
 ```
 
-- add a template reference variable to the name input and instead of binding to the Form Data, bind to the input's className property -
+- add a template reference variable `#name` to the name input and instead of binding to the Form Data, bind to the input's className property -
 
 ```HTML
     <div class="form-group">
@@ -195,4 +195,4 @@ Angular automatically mirrors many control properties onto the form control elem
 
 Take a look at the browser. The class applied to the input element are displayed - form-control ng-untouched ng-pristine ng-valid. When you play with the input field you can see that these classes will change. These classes can be used to provide visual feedback.  
 Angular also provides alternative associative properties for each of these classes on the ngModel directive.  
-![NgModel Properties](./ngModelProps.png)
+![NgModel Properties](./images/ngModelProps.png)
