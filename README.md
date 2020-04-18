@@ -193,7 +193,9 @@ Angular automatically mirrors many control properties onto the form control elem
     {{ name.className }}
 ```
 
-Take a look at the browser. The class applied to the input element are displayed - form-control ng-untouched ng-pristine ng-valid. When you play with the input field you can see that these classes will change. These classes can be used to provide visual feedback.  
-Angular also provides alternative associative properties for each of these classes on the ngModel directive.  
-**ngModel Properties**
-![NgModel Properties](./images/ngModelProp.png)
+Take a look at the browser. The class applied to the input element are displayed - form-control ng-untouched ng-pristine ng-valid. When you play with the input field you can see that these classes will change. These classes can be used to provide visual feedback.
+
+- **ngModel Properties**- Angular also provides alternative associative properties for each of these classes on the ngModel directive.  
+  ![NgModel Properties](./images/ngModelProp.png)
+- Accessing ngModel Properties - create a reference to the ngModel directive. Here `#name`points to the input element in the DOM. By assigning it a value of ngModel - `#name="ngModel"`, the reference variable now points to the ngModel of this particular form control; so we can easily bind to the different properties.  
+  For example take a look at the untouched property in the browser - `{{ name.untouched }}`
