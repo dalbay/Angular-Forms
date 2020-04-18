@@ -155,6 +155,44 @@ export class AppComponent {
 
 - Now we can bind the userModel data to the form; display the model in json form on the view: `{{ userModel | json }}`
 - Bind the properties of the Model to the ngModel directive - for **Property Data Binding** make use of square brackets []. **`[ngModel]="userModel.name"`**. This form of data is **one way data binding - from the class to the view**.  
-  We need **Two Way Binding - bind data from the view back to the class**. To achieve that use the banana in the box syntax - [()] for the ngModel directive.  
+  We need **Two Way Binding - bind data from the view back to the class**. To achieve that use the banana in the box syntax - [()] for the ngModel directive - **`[(ngModel)]="userModel.name"`**
   Now both the Angular object and the model will reflect the updated values. _With two way binding we always have the model and the view in synch._
 - So far we have captured all the form data into a model which can now be sent to the server. However before sending it to the server, it is crucial to perform client side validation and provide useful visiual feedback to the user.
+
+### Validation in Template Driven Forms - Track Control State and Validity
+
+Here are the classes that are applied to a Form Control based on its state and validity.  
+Angular automatically mirrors many control properties onto the form control element as CSS classes. You can use these classes to style form control elements according to the state of the form. The following classes are currently supported:
+
+```
+.ng-valid  ->  the control's value is valid.
+.ng-invalid
+
+.ng-touched  ->  the control has been visited.
+.ng-untouched
+
+.ng-dirty  ->  the control's value has changed.
+.ng-pristine
+
+.ng-pending
+```
+
+- add a template reference variable to the name input and instead of binding to the Form Data, bind to the input's className property -
+
+```HTML
+    <div class="form-group">
+      <label>Name</label>
+      <input
+        #name
+        type="text"
+        class="form-control"
+        [(ngModel)]="userModel.name"
+        name="userName"
+      />
+    </div>
+    {{ name.className }}
+```
+
+Take a look at the browser. The class applied to the input element are displayed - form-control ng-untouched ng-pristine ng-valid. When you play with the input field you can see that these classes will change. These classes can be used to provide visual feedback.  
+Angular also provides alternative associative properties for each of these classes on the ngModel directive.  
+![NgModel Properties](./ngModelProps.png)
