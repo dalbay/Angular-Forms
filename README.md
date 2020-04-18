@@ -58,11 +58,11 @@ Add the following HTML in the Angular Template
     </div>
     <div class="form-group">
       <label>Email</label>
-      <input type="email" class="form-control" />
+      <input type="email" class="form-control"/>
     </div>
     <div class="form-group">
       <label>Phone</label>
-      <input type="tel" class="form-control" />
+      <input type="tel" class="form-control"/>
     </div>
     <div class="form-group">
       <select class="custom-select">
@@ -94,7 +94,7 @@ Add the following HTML in the Angular Template
     </div>
     <!--Check Box Control-->
     <div class="form-check mb-3">
-      <input class="form-check-input" type="checkbox" />
+      <input class="form-check-input" type="checkbox"/>
       <label class="form-check-label">Send me promotional offers</label>
     </div>
     <!--Submit Button-->
@@ -105,20 +105,40 @@ Add the following HTML in the Angular Template
 
 ### Binding Data with ngForm
 
-- Import the Angular Forms Module in the ts file `import { FormsModule } from '@angular/forms';`
+- Import the Angular Forms Module in the app.module.ts file `import { FormsModule } from '@angular/forms';`
 - add it to the imports array
   ```TypeScript
-  @NgModule({
-  declarations: [
-      AppComponent
-  ],
-  imports: [
-    FormsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-  })
+    @NgModule({
+    declarations: [AppComponent],
+    imports: [BrowserModule, FormsModule],
+    providers: [],
+    bootstrap: [AppComponent],
+    })
   ```
 - Angular attaches an ngForm directive to the form tag behind the sceen. This provide infromation about this form like, values of the form controls and their validity.  
   To get a reference to the ngForm directive use a template reference variable - `<form #userForm="ngForm">`
-- To get access of the values of the form controls use the value property. Here use the values and pass it to the json file - {{ userForm.value | json }}
+- To get access of the values of the form controls use the value property. Here use the values and pass it to the json file - `{{ userForm.value | json }}`
+- The form controls that we want to tracked, place in the ngModel directive - `<input type="text" class="form-control" ngModel />`
+- If ngModel is used within a form tag, either the name attribute must be set or the form control must be defined as 'standalone' in ngModelOptions.  
+  Add the `name` attribute to each of the form controls.
+- Angular also provides the _ngModulGroup_ Directive - to create groups or sub-groups within a form.  
+  Group all of the address fields into an address object using the ngModelGroup directive - `<div ngModelGroup="address">` This section is commented out, but here is how it would output the json for this group:  
+  `{ "address": { "street": "", "city": "", "state": "", "postalCode": "" }, "userName": "", "email": "", "phone": "", "topic": "", "timePreference": "", "subscribe": "" }`
+
+### Binding Data to a Model
+
+- User enters the data, we capture the changes, and update an instance of the Model, that can later be sent to the server.
+- First generate a model class - `ng generate class 'name of class'` - user.ts
+
+```TypeScript
+export class User {
+  constructor(
+    public name: string,
+    public email: string,
+    public phone: number,
+    public topic: string,
+    public timePreference: string,
+    public subscribe: boolean
+  ) {}
+}
+```
