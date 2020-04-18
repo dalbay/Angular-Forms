@@ -212,7 +212,7 @@ You have two options:
   The class Boostrap provides for invalid state is `is-invalid`, this will display a red border on the control.
 
   - First get a reference to the ngModel directive (if you don't) - `#name="ngModel"`
-  - Use the pattern attribute if you use a pattern `pattern="^\d{10}$"`
+  - Add the required attribute and/or the pattern attribute if you use a pattern `pattern="^\d{10}$"`
   - Bind the invalid class - **Class Binding**. - this will be applied only when the form control is invalid. (apply class when name control is invalid)  
     _Check if is not empty after being touched, it is ok if empty at start-up._
 
@@ -250,3 +250,50 @@ You have two options:
     ```
 
     ![ANGULAR Validation](./images/validation.png)
+
+#### Display Error Messages
+
+Add text as the error message for the a form control in a `<small></small>`tag right after the `<input></input>`tag; and the conditions with the ngModel properties. We can either use _`ngIf`_ or _Class Binding_.
+
+- For Class Binding - `d-none`; to make it appear like an error message use class `text-danger`  
+  <small class="text-danger" [class.d-none]="name.valid || name.untouched">Name is required</small>
+- Example with two error attributes:
+  ```HTML
+      <div class="form-group">
+      <label>Phone</label>
+      <input
+        type="tel"
+        #phone="ngModel"
+        pattern="^\d{10}$"
+        required
+        [class.is-invalid]="phone.invalid && phone.touched"
+        class="form-control"
+        [(ngModel)]="userModel.phone"
+        name="phone"
+      />
+      <small class="text-danger" [class.d-none]="phone.valid || phone.untouched">Phone number is required and must be 10 digits</small>
+    </div>
+  ```
+- Use of the Errors property on ngModel - comment out the small tag for the phone and add a `<div></div>`tag that will be conditionally rendered based on whether the phone number field has an error or not. For that use the **`ngIf`directive** along with the ngModel properties.
+  ```HTML
+      <div class="form-group">
+      <label>Phone</label>
+      <input
+        type="tel"
+        #phone="ngModel"
+        pattern="^\d{10}$"
+        required
+        [class.is-invalid]="phone.invalid && phone.touched"
+        class="form-control"
+        [(ngModel)]="userModel.phone"
+        name="phone"
+      />
+      <!-- <small class="text-danger" [class.d-none]="phone.valid || phone.untouched"
+        >Phone number is required and must be 10 digits</small
+      > -->
+      <div *ngIf="phone.errors && (phone.invalid || phone.touched)">
+        <small class="text-danger" *ngIf="phone.errors.required">Phone number is required</small>
+        <small class="text-danger" *ngIf="phone.errors.pattern">Phone number must be 10 digits</small>
+      </div>
+    </div>
+  ```
