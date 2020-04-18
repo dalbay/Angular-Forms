@@ -216,7 +216,7 @@ You have two options:
   - Bind the invalid class - **Class Binding**. - this will be applied only when the form control is invalid.  
     _Check if is not empty after being touched, it is ok if empty at start-up._
 
-  ```HTML
+    ````HTML
     <div class="form-group">
       <label>Name</label>
       <input
@@ -230,12 +230,12 @@ You have two options:
       />
     </div>
     {{ name.valid }}
-  ```
+    ```
 
-  _Pattern matching Validation_ - add regex for a pattern
+    _Pattern matching Validation_ - add regex for a pattern
 
-  ```HTLM
-      <div class="form-group">
+    ```HTLM
+    <div class="form-group">
       <label>Phone</label>
       <input
         type="tel"
@@ -247,4 +247,6 @@ You have two options:
         name="phone"
       />
     </div>
-  ```
+
+    ```
+    ````
