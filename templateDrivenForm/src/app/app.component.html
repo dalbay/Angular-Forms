@@ -30,12 +30,14 @@
       <input
         #name="ngModel"
         type="text"
+        required
+        [class.is-invalid]="name.invalid && name.touched"
         class="form-control"
         [(ngModel)]="userModel.name"
         name="userName"
       />
     </div>
-    {{ name.untouched }}
+    {{ name.valid }}
     <div class="form-group">
       <label>Email</label>
       <input
@@ -49,6 +51,9 @@
       <label>Phone</label>
       <input
         type="tel"
+        #phone="ngModel"
+        pattern="^\d{10}$"
+        [class.is-invalid]="phone.invalid && phone.touched"
         class="form-control"
         [(ngModel)]="userModel.phone"
         name="phone"

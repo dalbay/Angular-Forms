@@ -159,7 +159,9 @@ export class AppComponent {
   Now both the Angular object and the model will reflect the updated values. _With two way binding we always have the model and the view in synch._
 - So far we have captured all the form data into a model which can now be sent to the server. However before sending it to the server, it is crucial to perform client side validation and provide useful visiual feedback to the user.
 
-### Validation in Template Driven Forms - Track Control State and Validity
+### Validation in Template Driven Forms
+
+#### Track Control State and Validity
 
 Here are the classes that are applied to a Form Control based on its state and validity.  
 Angular automatically mirrors many control properties onto the form control element as CSS classes. You can use these classes to style form control elements according to the state of the form. The following classes are currently supported:
@@ -195,8 +197,54 @@ Angular automatically mirrors many control properties onto the form control elem
 
 Take a look at the browser. The class applied to the input element are displayed - form-control ng-untouched ng-pristine ng-valid. When you play with the input field you can see that these classes will change. These classes can be used to provide visual feedback.
 
-- _ngModel Properties_  
+- _ngModel Properties:_  
   Angular also provides alternative associative properties for each of these classes on the ngModel directive.  
   ![NgModel Properties](./images/ngModelProp.png)
 - Accessing ngModel Properties - create a reference to the ngModel directive. Here `#name`points to the input element in the DOM. By assigning it a value of ngModel - `#name="ngModel"`, the reference variable now points to the ngModel of this particular form control; so we can easily bind to the different properties.  
   For example take a look at the untouched property in the browser - `{{ name.untouched }}`
+
+#### Validation with Visual Feedback
+
+You have two options:
+
+- Create your own class with the necessary styles
+- You can use Validation Classes that the CSS framework provides.  
+  The class Boostrap provides for invalid state is `is-invalid`, this will display a red border on the control.
+
+  - First get a reference to the ngModel directive (if you don't) - `#name="ngModel"`
+  - Use the pattern attribute if you use a pattern `pattern="^\d{10}$"`
+  - Bind the invalid class - **Class Binding**. - this will be applied only when the form control is invalid.  
+    _Check if is not empty after being touched, it is ok if empty at start-up._
+
+  ```HTML
+    <div class="form-group">
+      <label>Name</label>
+      <input
+        #name="ngModel"
+        type="text"
+        required
+        [class.is-invalid]="name.invalid && name.touched"  // (apply class when name control is invalid)
+        class="form-control"
+        [(ngModel)]="userModel.name"
+        name="userName"
+      />
+    </div>
+    {{ name.valid }}
+  ```
+
+  _Pattern matching Validation_ - add regex for a pattern
+
+  ```HTLM
+      <div class="form-group">
+      <label>Phone</label>
+      <input
+        type="tel"
+        #phone="ngModel"
+        pattern="^\d{10}$"
+        [class.is-invalid]="phone.invalid && phone.touched"
+        class="form-control"
+        [(ngModel)]="userModel.phone"
+        name="phone"
+      />
+    </div>
+  ```
