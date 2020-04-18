@@ -118,10 +118,10 @@ Add the following HTML in the Angular Template
 - Angular attaches an ngForm directive to the form tag behind the sceen. This provide infromation about this form like, values of the form controls and their validity.  
   To get a reference to the ngForm directive use a template reference variable - `<form #userForm="ngForm">`
 - To get access of the values of the form controls use the value property. Here use the values and pass it to the json file - `{{ userForm.value | json }}`
-- The form controls that we want to tracked, place in the ngModel directive - `<input type="text" class="form-control" ngModel />`
+- The form controls that we want to tracked, place in the **`ngModel` directive** - `<input type="text" class="form-control" ngModel />`
 - If ngModel is used within a form tag, either the name attribute must be set or the form control must be defined as 'standalone' in ngModelOptions.  
-  Add the `name` attribute to each of the form controls.
-- Angular also provides the _ngModulGroup_ Directive - to create groups or sub-groups within a form.  
+  Add the **`name`** attribute to each of the form controls.
+- Angular also provides the `__ngModulGroup__` Directive - to create groups or sub-groups within a form.  
   Group all of the address fields into an address object using the ngModelGroup directive - `<div ngModelGroup="address">` This section is commented out, but here is how it would output the json for this group:  
   `{ "address": { "street": "", "city": "", "state": "", "postalCode": "" }, "userName": "", "email": "", "phone": "", "topic": "", "timePreference": "", "subscribe": "" }`
 
@@ -142,3 +142,19 @@ export class User {
   ) {}
 }
 ```
+
+- Create an instance of this model in app.component.ts. Create a userModel property, this will auto import the User
+
+```TypeScript
+export class AppComponent {
+  topics = ["Angular", "React", "Vue"];
+
+  userModel = new User("Rob", "rob@test.com", 44444444444, "", "morning", true);
+}
+```
+
+- Now we can bind the userModel data to the form; display the model in json form on the view: `{{ userModel | json }}`
+- Bind the properties of the Model to the ngModel directive - for **Property Data Binding** make use of square brackets []. **`[ngModel]="userModel.name"`**. This form of data is **one way data binding - from the class to the view**.  
+  We need **Two Way Binding - bind data from the view back to the class**. To achieve that use the banana in the box syntax - [()] for the ngModel directive.  
+  Now both the Angular object and the model will reflect the updated values. _With two way binding we always have the model and the view in synch._
+- So far we have captured all the form data into a model which can now be sent to the server. However before sending it to the server, it is crucial to perform client side validation and provide useful visiual feedback to the user.
