@@ -213,17 +213,17 @@ You have two options:
 
   - First get a reference to the ngModel directive (if you don't) - `#name="ngModel"`
   - Use the pattern attribute if you use a pattern `pattern="^\d{10}$"`
-  - Bind the invalid class - **Class Binding**. - this will be applied only when the form control is invalid.  
+  - Bind the invalid class - **Class Binding**. - this will be applied only when the form control is invalid. (apply class when name control is invalid)  
     _Check if is not empty after being touched, it is ok if empty at start-up._
 
-    ````HTML
+    ```HTML
     <div class="form-group">
       <label>Name</label>
       <input
         #name="ngModel"
         type="text"
         required
-        [class.is-invalid]="name.invalid && name.touched"  // (apply class when name control is invalid)
+        [class.is-invalid]="name.invalid && name.touched"
         class="form-control"
         [(ngModel)]="userModel.name"
         name="userName"
@@ -234,7 +234,7 @@ You have two options:
 
     _Pattern matching Validation_ - add regex for a pattern
 
-    ```HTLM
+    ```HTML
     <div class="form-group">
       <label>Phone</label>
       <input
@@ -247,6 +247,6 @@ You have two options:
         name="phone"
       />
     </div>
-
     ```
-    ````
+
+    ![ANGULAR Validation](./images/validation.png)
