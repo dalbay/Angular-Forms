@@ -9,5 +9,21 @@ import { User } from "./user";
 export class AppComponent {
   topics = ["Angular", "React", "Vue"];
 
-  userModel = new User("", "rob@test.com", 1234567890, "", "morning", true);
+  topicHasError = true;
+
+  validateTopic(value) {
+    if (value === "default") {
+      this.topicHasError = true;
+    } else {
+      this.topicHasError = false;
+    }
+  }
+  userModel = new User(
+    "",
+    "rob@test.com",
+    1234567890,
+    "default",
+    "morning",
+    true
+  );
 }

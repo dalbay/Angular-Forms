@@ -297,4 +297,55 @@ Add text as the error message for the a form control in a `<small></small>`tag r
       </div>
     </div>
   ```
-  ![ANGULAR Validation](./images/validation1.png)
+  ![ANGULAR Validation](./images/validation1.png)  
+  <br/>
+
+#### Select Control Validation
+
+In this example user should select an option other than the default one.
+
+- Add `required` attribute on the `<select>`tag.
+- Create a reference to ngModel - `#topic="ngModel"`
+- use class binding - `[class.is-invalid]="topic.invalid && topic.touched"`
+- add the error message right after the `</select>` tag - `<small class="text-danger" [class.d-none]="topic.valid || topic.untouched">Please choose a topic</small>`  
+  This validation only works when the value of default string is empty. If the model passes in a value for the default string, the validation will not work; to fix this use _custom validation_
+- **Custom Validation** for the select control - check in the event handler if the value is the default string value; if it is set an error flag to true, and use this flag to display the error message.
+
+* First, the select tag needs binding to blur and change; when they occure we want the `validateTopic(topic.value)` method to be executed; with a passed in value of the select control. `(blur)="validateTopic(topic.value)" (change)="validateTopic(topic.value)"`
+* Define the method to set an error flag in app.component.ts
+
+  ```TypeScript
+    topicHasError = true;
+
+    validateTopic(value) {
+    if (value === "default") {
+      this.topicHasError = true;
+    } else {
+      this.topicHasError = false;
+    }
+  }
+  ```
+
+* use the value of the condition to display the appropriate error message. Change the is-invalid class and the display none class; get rid of the required attribute.
+  ```HTML
+  <div class="form-group">
+    <select
+      (blur)="validateTopic(topic.value)"
+      (change)="validateTopic(topic.value)"
+      #topic="ngModel"
+      [class.is-invalid]="topicHasError && topic.touched"
+      class="custom-select"
+      [(ngModel)]="userModel.topic"
+      name="topic"
+    >
+      <option value="default">I am interested in</option>
+      <option *ngFor="let topic of topics">{{ topic }}</option>
+    </select>
+    <small
+      class="text-danger"
+      [class.d-none]="!topicHasError || topic.untouched"
+      >Please choose a topic</small
+    >
+  </div>
+  ```
+  ![ANGULAR Validation](./images/validation2.png)

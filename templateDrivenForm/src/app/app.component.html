@@ -75,10 +75,23 @@
       </div>
     </div>
     <div class="form-group">
-      <select class="custom-select" [(ngModel)]="userModel.topic" name="topic">
-        <option value="">I am interested in</option>
+      <select
+        (blur)="validateTopic(topic.value)"
+        (change)="validateTopic(topic.value)"
+        #topic="ngModel"
+        [class.is-invalid]="topicHasError && topic.touched"
+        class="custom-select"
+        [(ngModel)]="userModel.topic"
+        name="topic"
+      >
+        <option value="default">I am interested in</option>
         <option *ngFor="let topic of topics">{{ topic }}</option>
       </select>
+      <small
+        class="text-danger"
+        [class.d-none]="!topicHasError || topic.untouched"
+        >Please choose a topic</small
+      >
     </div>
     <!--Radio Button-->
     <div class="mb-3">
