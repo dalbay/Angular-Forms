@@ -297,3 +297,4 @@ Add text as the error message for the a form control in a `<small></small>`tag r
       </div>
     </div>
   ```
+  ![ANGULAR Validation](./images/validation1.png)
