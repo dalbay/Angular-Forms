@@ -102,3 +102,23 @@ Add the following HTML in the Angular Template
   </form>
 </div>
 ```
+
+### Binding Data with ngForm
+
+- Import the Angular Forms Module in the ts file `import { FormsModule } from '@angular/forms';`
+- add it to the imports array
+  ```TypeScript
+  @NgModule({
+  declarations: [
+      AppComponent
+  ],
+  imports: [
+    FormsModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+  })
+  ```
+- Angular attaches an ngForm directive to the form tag behind the sceen. This provide infromation about this form like, values of the form controls and their validity.  
+  To get a reference to the ngForm directive use a template reference variable - `<form #userForm="ngForm">`
+- To get access of the values of the form controls use the value property. Here use the values and pass it to the json file - {{ userForm.value | json }}
