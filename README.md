@@ -40,9 +40,64 @@ To achieve this Angular provides two approaches:
 
 - Adding the Form  
   Add the following HTML in the Angular Template  
-  • Add div tag of class container fluid `<div class="container-fluid"></div>`
-  • For the topics select create the array in app.component.ts
-  Create a new property (you can delete the default generated title property) - `topics = ['Angular', 'React', 'Vue'];`
-  • Bind the array to a select dropdown in the HTML
-  • To iterrate through the list of topics use the ngForm directive and display the list.
+  • Add div tag of class container fluid `<div class="container-fluid"></div>`  
+  • For the topics select create the array in app.component.ts  
+  Create a new property (you can delete the default generated title property) - `topics = ['Angular', 'React', 'Vue'];`  
+  • Bind the array to a select dropdown in the HTML  
+  • To iterrate through the list of topics use the ngForm directive and display the list.  
   • Add a radiobutton group to select the time slot
+
+```HTML
+<div class="container-fluid">
+  <h1>Form Header</h1>
+  <form>
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label>Phone</label>
+      <input type="tel" class="form-control" />
+    </div>
+    <div class="form-group">
+      <select class="custom-select">
+        <option selected>I am interested in</option>
+        <option *ngFor="let topic of topics">{{ topic }}</option>
+      </select>
+    </div>
+    <!--Radio Button-->
+    <div class="mb-3">
+      <label>Time Preferene</label>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="timePreference"
+          value="morning"
+        />
+        <label class="form-check-label">Morning (9AM - 12PM)</label>
+      </div>
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="radio"
+          name="timePreference"
+          value="evening"
+        />
+        <label class="form-check-label">Evening (5PM - 8PM)</label>
+      </div>
+    </div>
+    <!--Check Box Control-->
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" />
+      <label class="form-check-label">Send me promotional offers</label>
+    </div>
+    <!--Submit Button-->
+    <button class="btn btn-outline-primary" type="submit">Submit Form</button>
+  </form>
+</div>
+```
