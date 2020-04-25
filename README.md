@@ -349,3 +349,23 @@ In this example user should select an option other than the default one.
   </div>
   ```
   ![ANGULAR Validation](./images/validation2.png)
+
+#### Form Validation
+
+Form level validation with Angular; instead of individual Form Controls.
+Since Angular attaches the ngForm directive (`ngForm`) automatically to the form tag (`<form>`), we can get a reference to the form tag with the help of a template reference variable (`#useForm`). - `<form #userForm="ngForm">`
+The ngModel properties are also availabe on the ngForm directive - `{{userForm.form.invalid}}`.  
+_Example:_ Add _property binding_ to the submit button. Add the disabled property to the submit button and bind it to the invalid state of the form. - **`[disabled]="userForm.form.invalid"`**.
+This works fine if you don't have custom validation that ngForm is not tracking. In this example though, we have the select control validation. There are a couple of ways to handle this. One way is when the button is clicked and an event is fired we could check the value of the field; another way is to add another condition to the disabled property. So the submit button gets disalbed when the userForm is invalid or the topic field has an error.
+
+```HTML
+    <!--Submit Button-->
+    <button
+      [disabled]="userForm.form.invalid || topicHasError"
+      class="btn btn-outline-primary"
+      type="submit">
+      Submit Form
+    </button>
+```
+
+![ANGULAR Validation](./images/formLevelValidaionInTDF.png)
