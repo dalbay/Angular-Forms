@@ -1,6 +1,6 @@
 <div class="container-fluid">
   <h1>Form Header</h1>
-  <form #userForm="ngForm">
+  <form #userForm="ngForm" novalidate (ngSubmit)="onSubmit()">
     <!-- {{ userForm.value | json }}
     <hr />
     {{ userModel | json }} -->

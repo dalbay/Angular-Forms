@@ -18,6 +18,9 @@ export class AppComponent {
       this.topicHasError = false;
     }
   }
+  onSubmit() {
+    console.log(this.userModel);
+  }
   userModel = new User(
     "",
     "rob@test.com",

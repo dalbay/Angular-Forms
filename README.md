@@ -374,3 +374,35 @@ In this example user should select an option other than the default one.
 ```
 
 ![ANGULAR Validation](./images/formLevelValidationInTDF.png)
+
+#### Submitting form data
+
+The next step is to how to post the form data to a server - **how to make Http requests.**.
+
+- First add the noValidate attribute on the form tag. This prevents browser validation when clicking the submit button.
+- Next, bind to the ngSubmit event, which gets emmitted when the submit button is clicked. On the form tag bind to ngSubmit and asign a handler called onSubmit. - `<form #userForm="ngForm" novalidate (ngSubmit)="onSubmit()">`
+- Next, define the onSubmit event handler in app.component.ts class
+
+```TypeScript
+  onSubmit() {
+    console.log(this.userModel);
+  }
+```
+
+To be able to send this data to a server, we need to make use of a service. Create a new enrolment-service using the CLI. Navigate inside the project folder and run this command in the terminal - `$ ng g s enrollment`. This will add `CREATE src/app/enrollment.service.ts (139 bytes)`.
+
+- import into this service - `import { HttpClient } from '@angular/common/http';` and inject it in the constructor
+  ```TypeScript
+    export class EnrollmentService {
+    constructor(private _http: HttpClient) {}
+  }
+  ```
+- include the module in - _app.module.ts_. import the module - `import { HttpClientModule } from "@angular/common/http";`; add it to the imports array -
+  ```TypeScript
+    @NgModule({
+    declarations: [AppComponent],
+    imports: [BrowserModule, FormsModule, HttpClientModule],
+    providers: [],
+    bootstrap: [AppComponent],
+  })
+  ```
