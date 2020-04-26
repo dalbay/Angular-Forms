@@ -588,22 +588,22 @@ app.listen(PORT, function () {
     return throwError(error);
   }
   ```
-- Now that we are sending the error to the component, display it by bind the _error statusText_ to the View(HTML):
-- Create a new property in app.component.ts `errorMsg = '';`
-- Assign the error statusText to the errorMsg property -
-  ```TypeScript
-    onSubmit() {
-    this.submitted = true;
-    this._enrollmentService.enroll(this.userModel).subscribe(
-      (data) => console.log("Success!", data),
-      (error) => (this.errorMsg = error.statusText)
-    );
-  }
-  ```
-- Bind this message in the HTML - right before the form tag add the following div tag:
-  ```HTML
-  <div class="alert alert-danger" *ngIf="errorMsg">{{ errorMsg }}</div>
-  ```
+- Display the Error in the View: Now that we are sending the error to the component, bind the _error statusText_ to the View(HTML)
+  - Create a new property in app.component.ts `errorMsg = '';`
+  - Assign the error statusText to the errorMsg property
+    ```TypeScript
+      onSubmit() {
+      this.submitted = true;
+      this._enrollmentService.enroll(this.userModel).subscribe(
+        (data) => console.log("Success!", data),
+        (error) => (this.errorMsg = error.statusText)
+      );
+    }
+    ```
+  - Bind this message in the HTML - right before the form tag add the following div tag:
+    ```HTML
+    <div class="alert alert-danger" *ngIf="errorMsg">{{ errorMsg }}</div>
+    ```
 - In server.js change the response status to 401 (Unauthorized) for the post request.  
   Now run the server; fill out the form and click the Submit Button. We should be able to see this error message on screen:  
   ![ANGULAR Validation](./images/error.png)
