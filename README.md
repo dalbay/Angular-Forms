@@ -379,8 +379,9 @@ In this example user should select an option other than the default one.
 
 The next step is to how to post the form data to a server - **how to make Http requests.**.
 
-- First add the noValidate attribute on the form tag. This prevents browser validation when clicking the submit button.
-- Next, bind to the **`ngSubmit`\*** event, which gets emmitted when the submit button is clicked. On the form tag bind to ngSubmit and asign a handler called **`onSubmit()`\***. - `<form #userForm="ngForm" novalidate (ngSubmit)="onSubmit()">`
+- First add the **`noValidate`\*** attribute on the form tag. This prevents browser validation when clicking the submit button.
+- Next, bind to the **`ngSubmit`\*** event, which gets emmitted when the Submit Button is clicked. On the form tag bind to ngSubmit and assign a handler called **`onSubmit()`\***. -  
+  `<form #userForm="ngForm" novalidate (ngSubmit)="onSubmit()">`
 - Next, define the `onSubmit()` event handler in app.component.ts class
 
 ```TypeScript
@@ -389,15 +390,15 @@ The next step is to how to post the form data to a server - **how to make Http r
   }
 ```
 
-To be able to send this data to a server, we need to make use of a **service**. Create a new enrolment-service using the CLI. Navigate inside the project folder and run this command in the terminal - `$ ng g s enrollment`. This will add `CREATE src/app/enrollment.service.ts (139 bytes)`.
+To be able to send this data to a server, we need to make use of a **Service** - `EntrollmentService`. Create a new enrolment-service using the CLI. Navigate inside the project folder and run this command in the terminal - `$ ng g s enrollment`. This will add `CREATE src/app/enrollment.service.ts (139 bytes)`files to the application.
 
-- import into this service - `import { HttpClient } from '@angular/common/http';` and inject it in the constructor
+- import into this service - `import { HttpClient } from '@angular/common/http';` and inject it in the constructor:
   ```TypeScript
     export class EnrollmentService {
     constructor(private _http: HttpClient) {}
   }
   ```
-- include the module in - _app.module.ts_. import the module - `import { HttpClientModule } from "@angular/common/http";`; add it to the imports array -
+- include the **module** in - _app.module.ts_ - `import { HttpClientModule } from "@angular/common/http";`; and add it to the imports array -
   ```TypeScript
     @NgModule({
     declarations: [AppComponent],
@@ -408,10 +409,38 @@ To be able to send this data to a server, we need to make use of a **service**. 
   ```
 - in the `EntrollmentService` class add a new property called `_url`, this will be the url to which we post the data.
 - create a method `enroll()` that makes the post request. This method will except an argument user of type User, make sure to auto import it;
+
   - within the body make the post request;
-  - the post request will return the response as an observable; we need to subscribe to the observable in app.component.ts.
-- Import the enrollment service and then inject it in the constructor - `import { EnrollmentService } from './enrollment.service';` - `constructor(private _enrollmentService: EnrollmentService){}`.
+  - the post request will return the response as an **observable**; we need to subscribe to the observable in app.component.ts.  
+    Here is the code for the service:
+
+    ```TypeScript
+    import { Injectable } from "@angular/core";
+    import { HttpClient } from "@angular/common/http";
+    import { from } from "rxjs";
+    import { User } from "./user";
+
+    @Injectable({
+      providedIn: "root",
+    })
+
+    export class EnrollmentService {
+
+      _url = "http://localhost:3000/enroll";
+
+      constructor(private _http: HttpClient) {}
+
+      enroll(user: User) {
+        return this._http.post<any>(this._url, user);
+      }
+    }
+    ```
+
+- In the app.component.ts file, Import this _EntrollmentService_ and then inject it in the constructor -  
+  `import { EnrollmentService } from './enrollment.service';`  
+  `constructor(private _enrollmentService: EnrollmentService){}`
 - In the `onSubmit()` method, we call the `enroll()` service method, pass in the `userModel`, and then subscribe to the response.
+
   ```TypeScript
     onSubmit() {
     this._enrollmentService.enroll(this.userModel).subscribe(
@@ -420,7 +449,53 @@ To be able to send this data to a server, we need to make use of a **service**. 
     );
   }
   ```
-- In the enroll service now we make the actual http request and send the data to the server. Right now we don't have a url to make the request. Next, we create an Express Server that accepts a post request from the Angular application.
+
+  Here is the code for the app.component.ts:
+
+  ```TypeScript
+  import { Component } from "@angular/core";
+  import { User } from "./user";
+  import { EnrollmentService } from "./enrollment.service";
+
+  @Component({
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.css"],
+  })
+  export class AppComponent {
+    topics = ["Angular", "React", "Vue"];
+
+    topicHasError = true;
+
+    validateTopic(value) {
+      if (value === "default") {
+        this.topicHasError = true;
+      } else {
+        this.topicHasError = false;
+      }
+    }
+
+    constructor(private _enrollmentService: EnrollmentService) {}
+
+    onSubmit() {
+      this._enrollmentService.enroll(this.userModel).subscribe(
+        (data) => console.log("Success!", data),
+        (error) => console.log("Error!", error)
+      );
+    }
+
+    userModel = new User(
+      "",
+      "rob@test.com",
+      1234567890,
+      "default",
+      "morning",
+      true
+    );
+  }
+  ```
+
+- Next, we create an Express Server that accepts a post request from the Angular application.
 
 #### Set up Express Server
 
@@ -474,13 +549,17 @@ app.listen(PORT, function () {
 - Run the server; in the terminal type - `$ node server`. Server is running and ready for requests.
 - Make the get request in the browser - localhost:3000  
   ![Server request](./images/server.png)
-- Add an Endpoint to which the Angular application will post the data to.
+- Add an Endpoint to which the Angular application will post data to the Express Server.
   ```TypeScript
     app.post("/enroll", function (req, res) {
-    console.log(res.body);
+    console.log(req.body);
     res.status(200).send({ message: "Data received" });
   });
   ```
 - Go back to the Angular application and update the url property in the service - `_url = "http://localhost:3000/enroll";`
 - Run the server, make selections in the application(browser) and click Submit Form Button. The server will process and display on console the message.  
   ![ANGULAR Validation](./images/SubmitForm.png)
+- When the form is submitted disable the Submit Button; here we will hide the entire form.  
+  Inside app.component.ts, add a new property called `submitted` and set the initial value to `false`. - `submitted = false;`
+- In the `onSubmit()` method set the value to `true`. - `this.submitted = true;`
+- In the HTML to the form tag add the condition `*ngIf="!submitted"` (only show the form if it has not been submitted). Now when you fill out the form and click the submit button, the form disapears.
