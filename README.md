@@ -380,8 +380,8 @@ In this example user should select an option other than the default one.
 The next step is to how to post the form data to a server - **how to make Http requests.**.
 
 - First add the noValidate attribute on the form tag. This prevents browser validation when clicking the submit button.
-- Next, bind to the ngSubmit event, which gets emmitted when the submit button is clicked. On the form tag bind to ngSubmit and asign a handler called onSubmit. - `<form #userForm="ngForm" novalidate (ngSubmit)="onSubmit()">`
-- Next, define the onSubmit event handler in app.component.ts class
+- Next, bind to the **`ngSubmit`\*** event, which gets emmitted when the submit button is clicked. On the form tag bind to ngSubmit and asign a handler called **`onSubmit()`\***. - `<form #userForm="ngForm" novalidate (ngSubmit)="onSubmit()">`
+- Next, define the `onSubmit()` event handler in app.component.ts class
 
 ```TypeScript
   onSubmit() {
@@ -389,7 +389,7 @@ The next step is to how to post the form data to a server - **how to make Http r
   }
 ```
 
-To be able to send this data to a server, we need to make use of a service. Create a new enrolment-service using the CLI. Navigate inside the project folder and run this command in the terminal - `$ ng g s enrollment`. This will add `CREATE src/app/enrollment.service.ts (139 bytes)`.
+To be able to send this data to a server, we need to make use of a **service**. Create a new enrolment-service using the CLI. Navigate inside the project folder and run this command in the terminal - `$ ng g s enrollment`. This will add `CREATE src/app/enrollment.service.ts (139 bytes)`.
 
 - import into this service - `import { HttpClient } from '@angular/common/http';` and inject it in the constructor
   ```TypeScript
@@ -406,3 +406,71 @@ To be able to send this data to a server, we need to make use of a service. Crea
     bootstrap: [AppComponent],
   })
   ```
+- in the `EntrollmentService` class add a new property called `_url`, this will be the url to which we post the data.
+- create a method `enroll()` that makes the post request. This method will except an argument user of type User, make sure to auto import it;
+  - within the body make the post request;
+  - the post request will return the response as an observable; we need to subscribe to the observable in app.component.ts.
+- Import the enrollment service and then inject it in the constructor - `import { EnrollmentService } from './enrollment.service';` - `constructor(private _enrollmentService: EnrollmentService){}`.
+- In the `onSubmit()` method, we call the `enroll()` service method, pass in the `userModel`, and then subscribe to the response.
+  ```TypeScript
+    onSubmit() {
+    this._enrollmentService.enroll(this.userModel).subscribe(
+      (data) => console.log("Success!", data),
+      (error) => console.log("Error!", error)
+    );
+  }
+  ```
+- In the enroll service now we make the actual http request and send the data to the server. Right now we don't have a url to make the request. Next, we create an Express Server that accepts a post request from the Angular application.
+
+#### Set up Express Server
+
+- This server will receive Form data.
+- Create a folder ouside this project called server which contains server code and initialize a new package.json file - `$ npm init --yes`
+- next install the dependencies - `$ npm install --save express body-parser cors`; express is our webserver, body-parser is the middleware to handle form data, cors is a package to make requests accross different ports. Here we see the dependencies in the server folder -
+  ```JSON
+    "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+  ```
+- Create a new file called server.js.
+- Require the packages that we have just installed.
+  ```TypeScript
+  const express = require('express');
+  const bodyParser = require('body-parser');
+  const cors = require('cors');
+  ```
+- Create a const for the port number the express server is going to run on - `const PORT = 3000;`
+- Create an instance of express - `const app = express();`
+- Specify body-parser to handle json data - `app.use(bodyParser.json());`
+- also use the cors package - `app.use(cors());`
+- Add code to test the get request -
+- Finally listend to requests on the specified port.
+  Here is the final code for the **basic express server**:
+
+```TypeScript
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+
+const PORT = 3000;
+
+const app = express();
+
+app.use(bodyParser.json());
+
+app.use(cors());
+
+app.get("/", function (req, res) {
+  res.send("Hello from server");
+});
+
+app.listen(PORT, function () {
+  console.log("Server running on localhost:" + PORT);
+});
+```
+
+- Run the server; in the terminal type - `$ node server`. Server is running and ready for requests.
+- Make the get request in the browser - localhost:3000
+  ![Server request](./images/server.png)

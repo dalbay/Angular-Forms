@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
 import { User } from "./user";
+import { EnrollmentService } from "./enrollment.service";
 
 @Component({
   selector: "app-root",
@@ -18,9 +19,16 @@ export class AppComponent {
       this.topicHasError = false;
     }
   }
+
+  constructor(private _enrollmentService: EnrollmentService) {}
+
   onSubmit() {
-    console.log(this.userModel);
+    this._enrollmentService.enroll(this.userModel).subscribe(
+      (data) => console.log("Success!", data),
+      (error) => console.log("Error!", error)
+    );
   }
+
   userModel = new User(
     "",
     "rob@test.com",
