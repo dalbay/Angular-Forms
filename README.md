@@ -426,7 +426,7 @@ To be able to send this data to a server, we need to make use of a **service**. 
 
 - This server will receive Form data.
 - Create a folder ouside this project called server which contains server code and initialize a new package.json file - `$ npm init --yes`
-- next install the dependencies - `$ npm install --save express body-parser cors`; express is our webserver, body-parser is the middleware to handle form data, cors is a package to make requests accross different ports. Here we see the dependencies in the server folder -
+- next install the dependencies - `$ npm install --save express body-parser cors`; _express_ is our webserver, _body-parser_ is the middleware to handle form data, _cors_ is a package to make requests accross different ports. Here we see the dependencies in the server folder -
   ```JSON
     "dependencies": {
     "body-parser": "^1.19.0",
@@ -472,5 +472,6 @@ app.listen(PORT, function () {
 ```
 
 - Run the server; in the terminal type - `$ node server`. Server is running and ready for requests.
-- Make the get request in the browser - localhost:3000
+- Make the get request in the browser - localhost:3000  
   ![Server request](./images/server.png)
+-
