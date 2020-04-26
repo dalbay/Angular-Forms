@@ -474,4 +474,13 @@ app.listen(PORT, function () {
 - Run the server; in the terminal type - `$ node server`. Server is running and ready for requests.
 - Make the get request in the browser - localhost:3000  
   ![Server request](./images/server.png)
--
+- Add an Endpoint to which the Angular application will post the data to.
+  ```TypeScript
+    app.post("/enroll", function (req, res) {
+    console.log(res.body);
+    res.status(200).send({ message: "Data received" });
+  });
+  ```
+- Go back to the Angular application and update the url property in the service - `_url = "http://localhost:3000/enroll";`
+- Run the server, make selections in the application(browser) and click Submit Form Button. The server will process and display on console the message.  
+  ![ANGULAR Validation](./images/SubmitForm.png)
