@@ -14,6 +14,8 @@ export class AppComponent {
 
   submitted = false;
 
+  errorMsg = "";
+
   validateTopic(value) {
     if (value === "default") {
       this.topicHasError = true;
@@ -28,7 +30,7 @@ export class AppComponent {
     this.submitted = true;
     this._enrollmentService.enroll(this.userModel).subscribe(
       (data) => console.log("Success!", data),
-      (error) => console.log("Error!", error)
+      (error) => (this.errorMsg = error.statusText)
     );
   }
 

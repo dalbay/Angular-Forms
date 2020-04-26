@@ -1,5 +1,6 @@
 <div class="container-fluid">
   <h1>Form Header</h1>
+  <div class="alert alert-danger" *ngIf="errorMsg">{{ errorMsg }}</div>
   <form
     #userForm="ngForm"
     *ngIf="!submitted"

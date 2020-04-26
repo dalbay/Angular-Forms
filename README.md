@@ -562,4 +562,50 @@ app.listen(PORT, function () {
 - When the form is submitted disable the Submit Button; here we will hide the entire form.  
   Inside app.component.ts, add a new property called `submitted` and set the initial value to `false`. - `submitted = false;`
 - In the `onSubmit()` method set the value to `true`. - `this.submitted = true;`
-- In the HTML to the form tag add the condition `*ngIf="!submitted"` (only show the form if it has not been submitted). Now when you fill out the form and click the submit button, the form disapears.
+- In the HTML to the `<form>` tag add the condition `*ngIf="!submitted"` (only show the form if it has not been submitted). Now when you fill out the form and click the submit button, the form disapears.
+
+#### Error Handling
+
+- The final part for Template Driven Form is Error Handling
+- In the EnrollmentService (enrollment.service.js), catch the error from the server and throw it to the subscribed component.  
+  To do that we need the help of **_rxjs_**.  
+  On the top of the service, import:
+  ```TypeScript
+  import { throwError } from "rxjs";
+  import { catchError } from "rxjs/operators";
+  ```
+- Catch the Error: - right after the post request, `pipe` the catch operator; and the method to handle (throw) the error (we will name it errorHandler).
+  ```TypeScript
+    enroll(user: User) {
+    return this._http
+      .post<any>(this._url, user)
+      .pipe(catchError(this.errorHandler));
+  }
+  ```
+- Throw the Error: Throw the error to the component that has subscriped to the service. Define the `errorHandler()` method inside this EnrollmentService class with a parameter of type `HttpErrorResponse`. Make sure this gets auto imported.
+  ```TypeScript
+    errorHandler(error: HttpErrorResponse) {
+    return throwError(error);
+  }
+  ```
+- Now that we are sending the error to the component, display it by bind the _error statusText_ to the View(HTML):
+- Create a new property in app.component.ts `errorMsg = '';`
+- Assign the error statusText to the errorMsg property -
+  ```TypeScript
+    onSubmit() {
+    this.submitted = true;
+    this._enrollmentService.enroll(this.userModel).subscribe(
+      (data) => console.log("Success!", data),
+      (error) => (this.errorMsg = error.statusText)
+    );
+  }
+  ```
+- Bind this message in the HTML - right before the form tag add the following div tag:
+  ```HTML
+  <div class="alert alert-danger" *ngIf="errorMsg">{{ errorMsg }}</div>
+  ```
+- In server.js change the response status to 401 (Unauthorized) for the post request.  
+  Now run the server; fill out the form and click the Submit Button. We should be able to see this error message on screen:  
+  ![ANGULAR Validation](./images/error.png)
+
+---
