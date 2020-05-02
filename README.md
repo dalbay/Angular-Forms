@@ -685,13 +685,13 @@ app.listen(PORT, function () {
 
 ### Create the Form Model
 
-- In Angular to be able to work with reactive forms we need the reactive forms module.  
-  Open **_app.module.ts_**and import reactive forms module  
-  `import { ReactiveFormsModule } from '@angular/forms';`  
-  also add it to the Imports array. The ReactiveFormsModule give us access to classes and directives that are necessary to build reactive forms. Out of these classes **FormGroup** and **FormControl** make up the building blogs of reactive form. Here is how they are represented:  
+- 1.Step - Define HTML Form in the component template.  
+  In Angular to be able to work with reactive forms we need the reactive forms module.  
+  Open **_app.module.ts_**and import reactive forms module - `import { ReactiveFormsModule } from '@angular/forms';`; and add it to the Imports array.  
+  The **ReactiveFormsModule** give us access to classes and directives that are necessary to build reactive forms. Out of these classes **FormGroup** and **FormControl** make up the building blogs of reactive form. Here is how they are represented:  
   ![ANGULAR Validation](./images/form.png)
-- Create a Form Module - Open app.component.ts; inside the class create a new FormGroup instance that represnets the user registration form(this will auto import FormGroup to app.component.ts);
-- and, initialize this FormGroup with an object of controls that are present in the HTML.
+- 2.Step - Create a Form Module  
+  Open app.component.ts; inside the class _create a new FormGroup instance_ that represnets the user registration form(this will auto import FormGroup to app.component.ts); and initialize this FormGroup with _object of FormControls_ that are present in the HTML.
   ```TypeScript
     export class AppModule {
     registrationForm = new FormGroup({
@@ -701,7 +701,8 @@ app.listen(PORT, function () {
     });
   }
   ```
-- Associate this module with the View (the HTML form). For that, the ReactiveFormsModule provides us with certain directives.
+- 3.Step - Associate this module with the View (the HTML form).  
+  For that, the ReactiveFormsModule provides us with certain directives.
 - On the form tag use the **`[formGroup]`** directive and bind the registrationFormGroup.
   `<form [formGroup]="registrationForm">`
 - To bind each of the from controls we use the **`[formControlName]`** directive.
@@ -730,3 +731,5 @@ app.listen(PORT, function () {
   </div>
   ```
 - Now we have created a communication layer between the model and the view. To visualize the communication, use interpolation on the registraion form with the json pipe. - `{{registrationForm.value | json}}`
+- Run the server and we see the input field with a UserName default value.  
+  ![ANGULAR Validation](./images/form1.png)
