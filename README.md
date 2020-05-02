@@ -632,7 +632,7 @@ app.listen(PORT, function () {
 ```
 
 - run the app and you'll see an object of NgForm and its properties logged in the console.  
-  ![ANGULAR Validation](./images/ngFormObject.png)
+  ![ANGULAR Validation](./images/NgFormObject.png)
 - The **value** property contains the value of all the different form fields.
 - The **form\*** property is of type **FormGroup**. Expand the form object and we see a property called **controls**. Expand this property and you will see all the list of the form fields. Each of these fields are of type **FromControl**.
 - ![ANGULAR Validation](./images/formControls.png)
