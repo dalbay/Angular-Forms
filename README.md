@@ -690,4 +690,43 @@ app.listen(PORT, function () {
   `import { ReactiveFormsModule } from '@angular/forms';`  
   also add it to the Imports array. The ReactiveFormsModule give us access to classes and directives that are necessary to build reactive forms. Out of these classes **FormGroup** and **FormControl** make up the building blogs of reactive form. Here is how they are represented:  
   ![ANGULAR Validation](./images/form.png)
--
+- Create a Form Module - Open app.component.ts; inside the class create a new FormGroup instance that represnets the user registration form(this will auto import FormGroup to app.component.ts);
+- and, initialize this FormGroup with an object of controls that are present in the HTML.
+  ```TypeScript
+    export class AppModule {
+    registrationForm = new FormGroup({
+      userName: new FormControl("Joe"), //default value
+      password: new FormControl(""),
+      confirmPassword: new FormControl(""),
+    });
+  }
+  ```
+- Associate this module with the View (the HTML form). For that, the ReactiveFormsModule provides us with certain directives.
+- On the form tag use the **`[formGroup]`** directive and bind the registrationFormGroup.
+  `<form [formGroup]="registrationForm">`
+- To bind each of the from controls we use the **`[formControlName]`** directive.
+  ```TypeScript
+    <div class="container-fluid">
+    <h2>Registration Form</h2>
+    <form [formGroup]="registrationForm">
+      <div class="form-group">
+        <label>Username</label>
+        <input formControlName="userName" type="text" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input formControlName="password" type="password" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input
+          formControlName="confirmPassword"
+          type="password"
+          class="form-control"
+        />
+      </div>
+      <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+  </div>
+  ```
+- Now we have created a communication layer between the model and the view.
