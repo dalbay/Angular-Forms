@@ -652,4 +652,4 @@ app.listen(PORT, function () {
 
 ### Adding HTML
 
--
+- Generate a new Angular project - `$ ng new reactiveForm`
