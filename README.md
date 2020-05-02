@@ -608,4 +608,29 @@ app.listen(PORT, function () {
   Now run the server; fill out the form and click the Submit Button. We should be able to see this error message on screen:  
   ![ANGULAR Validation](./images/error.png)
 
+#### TDF vs Reactive (Model Driven ) Approach
+
+##### Template Driven Forms Recap Example:
+
+- The `ngForm` directive gives us the entire information about the form.
+- in the `ngSubmit` event pass the reference variable(`userForm`) as a parameter.
+
+```TypeScript
+  <form
+    #userForm="ngForm"
+    *ngIf="!submitted"
+    novalidate
+    (ngSubmit)="onSubmit(userForm)"
+  >
+```
+
+- in the method log this object to the console.
+
+```TypeScript
+  onSubmit(userForm) {
+    this.submitted = true;
+    console.log(userForm);
+  }
+```
+
 ---

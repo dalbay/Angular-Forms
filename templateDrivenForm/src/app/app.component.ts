@@ -26,12 +26,13 @@ export class AppComponent {
 
   constructor(private _enrollmentService: EnrollmentService) {}
 
-  onSubmit() {
+  onSubmit(userForm) {
     this.submitted = true;
-    this._enrollmentService.enroll(this.userModel).subscribe(
-      (data) => console.log("Success!", data),
-      (error) => (this.errorMsg = error.statusText)
-    );
+    console.log(userForm);
+    // this._enrollmentService.enroll(this.userModel).subscribe(
+    //   (data) => console.log("Success!", data),
+    //   (error) => (this.errorMsg = error.statusText)
+    // );
   }
 
   userModel = new User(
