@@ -653,3 +653,41 @@ app.listen(PORT, function () {
 ### Adding HTML
 
 - Generate a new Angular project - `$ ng new reactiveForm`
+- Add a reference to Bootstrap css at index.html
+- Open app.component.html and begin by removing existing markup
+- Add div tag with container fluid,h2, form, and the form control for the user to enter data.
+
+  ```HTLM
+  <div class="container-fluid">
+    <h2>Registration Form</h2>
+    <form>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" class="form-control" />
+      </div>
+      <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+  </div>
+
+  ```
+
+- run the project - `$ ng serve -o`
+  ![ANGULAR Validation](./images/reactiveForm.png)
+- Next, create a model for this registration form which makes data exchange possible between the template and the class.
+
+### Create the Form Model
+
+- In Angular to be able to work with reactive forms we need the reactive forms module.  
+  Open **_app.module.ts_**and import reactive forms module  
+  `import { ReactiveFormsModule } from '@angular/forms';`  
+  also add it to the Imports array. The ReactiveFormsModule give us access to classes and directives that are necessary to build reactive forms. Out of these classes **FormGroup** and **FormControl** make up the building blogs of reactive form. Here is how they are represented:  
+  ![ANGULAR Validation](./images/form.png)
+-
