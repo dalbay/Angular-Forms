@@ -11,5 +11,10 @@ export class AppComponent {
     userName: new FormControl("Joe"), //default value
     password: new FormControl(""),
     confirmPassword: new FormControl(""),
+    address: new FormGroup({
+      city: new FormControl(""),
+      state: new FormControl(""),
+      postalCode: new FormControl(""),
+    }),
   });
 }

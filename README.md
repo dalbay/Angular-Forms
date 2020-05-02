@@ -733,3 +733,46 @@ app.listen(PORT, function () {
 - Now we have created a communication layer between the model and the view. To visualize the communication, use interpolation on the registraion form with the json pipe. - `{{registrationForm.value | json}}`
 - Run the server and we see the input field with a UserName default value.  
   ![ANGULAR Validation](./images/form1.png)
+
+### Nesting Form Groups
+
+- FormGroup class can also be used to group together different FormControls.
+- For example, a FormGroup could be address, and city,... could be the form controls.
+- Add the new FormControls to the HTML.
+- Update the Form Module. Add three new instances of the FormControl class and group them to an address field. To achieve grouping use the FormGroup class.
+  ```TypeScript
+    registrationForm = new FormGroup({
+    userName: new FormControl("Joe"), //default value
+    password: new FormControl(""),
+    confirmPassword: new FormControl(""),
+    address: new FormGroup({
+      city: new FormControl(""),
+      state: new FormControl(""),
+      postalCode: new FormControl(""),
+    }),
+  });
+  ```
+- Update the HTML to bind to the right control and make use of the `formControlName`directive and to the enclosing div tag, add the`formGroupName`directive assigning the address formGroup
+  ```HTML
+        <div class="form-group">
+        <label>City</label>
+        <input formControlName="city" type="password" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label>State</label>
+        <input formControlName="state" type="password" class="form-control" />
+      </div>
+      <div class="form-group">
+        <label>Postal Code</label>
+        <input
+          formControlName="postalCode"
+          type="password"
+          class="form-control"
+        />
+      </div>
+    </div>
+  ```
+  Now we can see that city, state and postalCode are grouped into an object that is named as address.  
+  ![ANGULAR Validation](./images/form2.png)
+
+### Managing Control Values
