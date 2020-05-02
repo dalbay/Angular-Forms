@@ -251,7 +251,7 @@ You have two options:
 
     ![ANGULAR Validation](./images/validation.png)
 
-#### Display Error Messages
+### Display Error Messages
 
 Add text as the error message for the a form control in a `<small></small>`tag right after the `<input></input>`tag; and the conditions with the ngModel properties. We can either use _`ngIf`_ or _Class Binding_.
 
@@ -300,7 +300,7 @@ Add text as the error message for the a form control in a `<small></small>`tag r
   ![ANGULAR Validation](./images/validation1.png)  
   <br/>
 
-#### Select Control Validation
+### Select Control Validation
 
 In this example user should select an option other than the default one.
 
@@ -350,7 +350,7 @@ In this example user should select an option other than the default one.
   ```
   ![ANGULAR Validation](./images/validation2.png)
 
-#### Form Validation
+### Form Validation
 
 - Form level validation with Angular; instead of individual Form Controls.
 - Since Angular attaches the ngForm directive (`ngForm`) automatically to the form tag (`<form>`), we can get a reference to the form tag with the help of a template reference variable (`#useForm`).  
@@ -375,7 +375,7 @@ In this example user should select an option other than the default one.
 
 ![ANGULAR Validation](./images/formLevelValidationInTDF.png)
 
-#### Submitting form data
+### Submitting Form Data
 
 The next step is to how to post the form data to a server - **how to make Http requests.**.
 
@@ -497,7 +497,7 @@ To be able to send this data to a server, we need to make use of a **Service** -
 
 - Next, we create an Express Server that accepts a post request from the Angular application.
 
-#### Set up Express Server
+### Set up Express Server
 
 - This server will receive Form data.
 - Create a folder ouside this project called server which contains server code and initialize a new package.json file - `$ npm init --yes`
@@ -564,7 +564,7 @@ app.listen(PORT, function () {
 - In the `onSubmit()` method set the value to `true`. - `this.submitted = true;`
 - In the HTML to the `<form>` tag add the condition `*ngIf="!submitted"` (only show the form if it has not been submitted). Now when you fill out the form and click the submit button, the form disapears.
 
-#### Error Handling
+### Error Handling
 
 - The final part for Template Driven Form is Error Handling
 - In the EnrollmentService (enrollment.service.js), catch the error from the server and throw it to the subscribed component.  
@@ -608,9 +608,7 @@ app.listen(PORT, function () {
   Now run the server; fill out the form and click the Submit Button. We should be able to see this error message on screen:  
   ![ANGULAR Validation](./images/error.png)
 
-#### TDF vs Reactive (Model Driven ) Approach
-
-##### Template Driven Forms Recap Example:
+### Template Driven Forms Recap Example:
 
 - The `ngForm` directive gives us the entire information about the form.
 - in the `ngSubmit` event pass the reference variable(`userForm`) as a parameter.
@@ -633,4 +631,25 @@ app.listen(PORT, function () {
   }
 ```
 
+- run the app and you'll see an object of NgForm and its properties logged in the console.  
+  ![ANGULAR Validation](./images/ngFormObject.png)
+- The **value** property contains the value of all the different form fields.
+- The **form\*** property is of type **FormGroup**. Expand the form object and we see a property called **controls**. Expand this property and you will see all the list of the form fields. Each of these fields are of type **FromControl**.
+- ![ANGULAR Validation](./images/formControls.png)
+- **FromGroup** and **FormControl** types are the building blog of Reactive Forms.
+
 ---
+
+## REACTIVE FORMS
+
+- Code and the logic resides in the component class
+- No two way binding - we need to react to user inputs to update the values.
+- Well suited for complex scenarios
+- Dynamic form fields - user might add another phone number
+- Custom validation
+- Dynamic validation - if user subscribes the email field needs to be valid.
+- Unit test - since the logic is in ts. file in the component class
+
+### Adding HTML
+
+-
