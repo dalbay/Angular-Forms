@@ -729,4 +729,4 @@ app.listen(PORT, function () {
     </form>
   </div>
   ```
-- Now we have created a communication layer between the model and the view.
+- Now we have created a communication layer between the model and the view. To visualize the communication, use interpolation on the registraion form with the json pipe. - `{{registrationForm.value | json}}`
